@@ -13,7 +13,7 @@ var speed = 2;                          // This is the number of pixels the acto
 var start = false;                      // If the game has started or not
 
 // Canvas size is a multiple of 32. 32x32 is the size of each grid.
-var game = new Phaser.Game(960, 544, Phaser.CANVAS, 'intercept-canvas', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(960, 576, Phaser.CANVAS, 'intercept-canvas', { preload: preload, create: create, update: update });
 var actor;
 
 function preload() {
@@ -31,7 +31,7 @@ function create() {
 
     //  This creates a simple sprite that is using our loaded image and
     //  displays it on-screen
-    actor = game.add.sprite(480, 272, 'actor');
+    actor = game.add.sprite(480, 288, 'actor');
     actor.anchor.x = 0.5;
     actor.anchor.y = 0.5;
     actor.scale.x = 0.3;
