@@ -18,6 +18,21 @@
 
     requestAnimFrame(animate);
 
+    // Create a texture for the actor
+    var texture = PIXI.Texture.fromImage("assets/img/blueBike1.png");
+    // create an actor from the texture
+    var actor = new PIXI.Sprite(texture);
+
+    // Center the actor's anchor point
+    actor.anchor.x = 0.5;
+    actor.anchor.y = 0.5;
+
+    // Move the actor to center screen
+    actor.position.x = 480;
+    actor.position.y = 270;
+
+    stage.addChild(actor);
+
     function animate() {
         requestAnimFrame(animate);
 
