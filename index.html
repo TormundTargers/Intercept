@@ -6,6 +6,25 @@
     <script src="pixi.js"></script>
 </head>
 <body>
+<script>
+    // Create a new pixi stage
+    var stage = new PIXI.Stage(0x323232);
 
+    // Create renderer instance
+    var renderer = PIXI.autoDetectRenderer(400,300);
+
+    // Add renderer to view element
+    document.body.appendChild(renderer.view);
+
+    requestAnimFrame(animate);
+
+    function animate() {
+        requestAnimFrame(animate);
+
+        // Render the stage
+        renderer.render(stage);
+    }
+
+</script>
 </body>
 </html>
