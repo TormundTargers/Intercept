@@ -3,46 +3,32 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Intercept</title>
-    <script src="pixi.js"></script>
+    <script src="phaser.min.js"></script>
 </head>
 <body>
 <script>
-    // Create a new pixi stage
-    var stage = new PIXI.Stage(0x323232);
+	var game = new Phaser.Game(960, 540, Phaser.CANVAS, 'intercept-canvas', { preload: preload, create: create });
 
-    // Create renderer instance
-    var renderer = PIXI.autoDetectRenderer(960,540);
+function preload() {
+	// Assets that will be preloaded will go here
 
-    // Add renderer to view element
-    document.body.appendChild(renderer.view);
+    //  Here we are loading an image. The first parameter is the unique
+    //  string by which we'll identify the image later in our code.
 
-    requestAnimFrame(animate);
+    //  The second parameter is the URL of the image (relative)
+    game.load.image('actor', 'assets/img/blueBike1.png');
 
-    // Create a texture for the actor
-    var texture = PIXI.Texture.fromImage("assets/img/blueBike1.png");
-    // create an actor from the texture
-    var actor = new PIXI.Sprite(texture);
+}
 
-    // Resize actor
-    actor.scale.x = 0.5;
-    actor.scale.y = 0.5;
+function create() {
 
-    // Center the actor's anchor point
+    //  This creates a simple sprite that is using our loaded image and
+    //  displays it on-screen
+    var actor = game.add.sprite(480, 270, 'actor');
     actor.anchor.x = 0.5;
     actor.anchor.y = 0.5;
 
-    // Move the actor to center screen
-    actor.position.x = 480;
-    actor.position.y = 270;
-
-    stage.addChild(actor);
-
-    function animate() {
-        requestAnimFrame(animate);
-
-        // Render the stage
-        renderer.render(stage);
-    }
+}
 
 </script>
 </body>
