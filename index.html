@@ -7,7 +7,8 @@
 </head>
 <body>
 <script>
-	var game = new Phaser.Game(960, 540, Phaser.CANVAS, 'intercept-canvas', { preload: preload, create: create });
+	// Canvas size is a multiple of 32. 32x32 is the size of each grid.
+	var game = new Phaser.Game(960, 544, Phaser.CANVAS, 'intercept-canvas', { preload: preload, create: create });
 
 function preload() {
 	// Assets that will be preloaded will go here
