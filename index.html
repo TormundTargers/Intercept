@@ -8,10 +8,9 @@
 <body>
 <script>
 // Global variables
-// Stores the direction the actor is to move next
-var inputDirection = null;
-
-var start = false;
+var inputDirection = null;              // Stores the direction the actor is to move next
+var speed = 2;                          // This is the number of pixels the actor will move each frame
+var start = false;                      // If the game has started or not
 
 // Canvas size is a multiple of 32. 32x32 is the size of each grid.
 var game = new Phaser.Game(960, 544, Phaser.CANVAS, 'intercept-canvas', { preload: preload, create: create, update: update });
@@ -43,49 +42,54 @@ function create() {
 function update() {
 	// Updated every frame
 	if (start) {
+        getInputDirection(function(){});
 		// Main game code
 		if (inputDirection != null) {
 			actor.angle = inputDirection;
 			inputDirection = null;
 		}
-		console.log(actor.angle);
 		switch (actor.angle) {
 			case 0:
-				actor.y -= 1;
+				actor.y -= speed;
 				break;
 			case 90:
-				actor.x += 1;
+				actor.x += speed;
 				break;
 			case -90:
-				actor.x -= 1;
+				actor.x -= speed;
 				break;
 			case -180:
-				actor.y += 1;
+				actor.y += speed;
 				break;
 		}
 	} else {
-		if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
-			// Start game if enter pressed.
-			start = true;
-			inputDirection = 0;
-		}
-		else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
-			// Start game if enter pressed.
-			start = true;
-			inputDirection = -180;
-		}
-		else if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-			// Start game if enter pressed.
-			start = true;
-			inputDirection = -90;
-		}
-		else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-			// Start game if enter pressed.
-			start = true;
-			inputDirection = 90;
-		}
+		getInputDirection(function() {
+            start = true;
+        });
 	}
 }
+    function getInputDirection(callback) {
+        if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+            // Start game if enter pressed.
+            callback();
+            inputDirection = 0;
+        }
+        else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
+            // Start game if enter pressed.
+            callback();
+            inputDirection = -180;
+        }
+        else if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
+            // Start game if enter pressed.
+            callback();
+            inputDirection = -90;
+        }
+        else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
+            // Start game if enter pressed.
+            callback();
+            inputDirection = 90;
+        }
+    }
 
 </script>
 </body>
