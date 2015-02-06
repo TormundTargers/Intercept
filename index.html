@@ -69,22 +69,22 @@ function update() {
 	}
 }
     function getInputDirection(callback) {
-        if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+        if (game.input.keyboard.isDown(Phaser.Keyboard.UP) && actor.angle != -180) {
             // Start game if enter pressed.
             callback();
             inputDirection = 0;
         }
-        else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
+        else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) && actor.angle != 0) {
             // Start game if enter pressed.
             callback();
             inputDirection = -180;
         }
-        else if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
+        else if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) && actor.angle != 90) {
             // Start game if enter pressed.
             callback();
             inputDirection = -90;
         }
-        else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
+        else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) && actor.angle != -90) {
             // Start game if enter pressed.
             callback();
             inputDirection = 90;
