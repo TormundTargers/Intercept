@@ -23,6 +23,10 @@
     // create an actor from the texture
     var actor = new PIXI.Sprite(texture);
 
+    // Resize actor
+    actor.scale.x = 0.5;
+    actor.scale.y = 0.5;
+
     // Center the actor's anchor point
     actor.anchor.x = 0.5;
     actor.anchor.y = 0.5;
