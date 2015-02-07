@@ -25,6 +25,7 @@ for(var i=0;i<xTiles;i++){
 var game = new Phaser.Game(canvasWidth, canvasHeight, Phaser.CANVAS, 'intercept-canvas', {
     preload: preload, create: create, update: update, render: render});
 
+
 // Player
 var actor;
 var trail;      // The trail left behind actor
@@ -52,9 +53,15 @@ function create() {
 
     // Pausing game
     game.input.keyboard.addKey(Phaser.Keyboard.ESC).onDown.add(function() {
-       game.paused = !game.paused;
+        if(!game.paused){
+            game.paused = true;
+        }
+        else{
+            game.paused = false;
+        }
     });
 }
+
 function update() {
 	// Updated every frame
 	if (start) {
