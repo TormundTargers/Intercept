@@ -13,8 +13,8 @@
     var speed = 4;                          // This is the number of pixels the player1 will move each frame
     var start = false;                      // If the game has started or not
     var tileSize = 12;                      // Size of game tiles/grid spacing
-    var xTiles = 80;                        // Number of Tiles horizontally
-    var yTiles = 50;                        // Number of Tiles vertically
+    var xTiles = 100;                        // Number of Tiles horizontally
+    var yTiles = 60;                        // Number of Tiles vertically
     var canvasWidth = tileSize * xTiles;
     var canvasHeight = tileSize * yTiles;
     var grid = new Array(xTiles);           // Relative grid coordinates game is played on.
@@ -51,7 +51,7 @@
         trail1.lineStyle(3,0x3498DB,1);
         trail1.boundsPadding = 0;
         trail2 = game.add.graphics(0,0);
-        trail2.lineStyle(3,0xCF000F,1);
+        trail2.lineStyle(3,0xF22613,1);
         trail2.boundsPadding = 0;
         // Display Players
         player1 = game.add.sprite(canvasWidth/4, canvasHeight/2, 'player1');
@@ -80,49 +80,49 @@
 
 
         // Movement keys
-        game.input.keyboard.addKey(Phaser.Keyboard.UP).onDown.add(function() {
+        game.input.keyboard.addKey(Phaser.Keyboard.W).onDown.add(function() {
             if(player1.angle != -180) {
                 inputDirection1 = 0;
                 whenStarted();
             }
         });
-        game.input.keyboard.addKey(Phaser.Keyboard.DOWN).onDown.add(function() {
+        game.input.keyboard.addKey(Phaser.Keyboard.S).onDown.add(function() {
             if(player1.angle != 0) {
                 inputDirection1 = -180;
                 whenStarted();
             }
         });
-        game.input.keyboard.addKey(Phaser.Keyboard.LEFT).onDown.add(function() {
+        game.input.keyboard.addKey(Phaser.Keyboard.A).onDown.add(function() {
             if(player1.angle != 90) {
                 inputDirection1 = -90;
                 whenStarted();
             }
         });
-        game.input.keyboard.addKey(Phaser.Keyboard.RIGHT).onDown.add(function() {
+        game.input.keyboard.addKey(Phaser.Keyboard.D).onDown.add(function() {
             if(player1.angle != -90) {
                 inputDirection1 = 90;
                 whenStarted();
             }
         });
-        game.input.keyboard.addKey(Phaser.Keyboard.W).onDown.add(function() {
+        game.input.keyboard.addKey(Phaser.Keyboard.UP).onDown.add(function() {
             if(player2.angle != -180) {
                 inputDirection2 = 0;
                 whenStarted();
             }
         });
-        game.input.keyboard.addKey(Phaser.Keyboard.S).onDown.add(function() {
+        game.input.keyboard.addKey(Phaser.Keyboard.DOWN).onDown.add(function() {
             if(player2.angle != 0) {
                 inputDirection2 = -180;
                 whenStarted();
             }
         });
-        game.input.keyboard.addKey(Phaser.Keyboard.A).onDown.add(function() {
+        game.input.keyboard.addKey(Phaser.Keyboard.LEFT).onDown.add(function() {
             if(player2.angle != 90) {
                 inputDirection2 = -90;
                 whenStarted();
             }
         });
-        game.input.keyboard.addKey(Phaser.Keyboard.D).onDown.add(function() {
+        game.input.keyboard.addKey(Phaser.Keyboard.RIGHT).onDown.add(function() {
             if(player2.angle != -90) {
                 inputDirection2 = 90;
                 whenStarted();
