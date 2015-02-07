@@ -72,6 +72,10 @@ function update() {
 				break;
 		}
         trail.lineTo(actor.x,actor.y);
+        if(!checkBounds(actor)) {
+        	start = false;
+        	//showGameOver();
+        }
 	} else {
 		getInputDirection(function() {
             start = true;
@@ -104,6 +108,10 @@ function update() {
 
     function render() {
         game.debug.spriteInfo(actor, 20, 32);
+    }
+
+    function checkBounds(actor) {
+    	return actor.x >= 0 && actor.x <= canvasWidth && actor.y >= 0 && actor.y <= canvasHeight;
     }
 
 </script>
