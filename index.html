@@ -13,7 +13,7 @@ var speed = 3;                          // This is the number of pixels the acto
 var start = false;                      // If the game has started or not
 var tileSize = 12;                      // Size of game tiles/grid spacing
 var xTiles = 80;                        // Number of Tiles horizontally
-var yTiles = 60;                        // Number of Tiles vertically
+var yTiles = 50;                        // Number of Tiles vertically
 var canvasWidth = tileSize * xTiles;
 var canvasHeight = tileSize * yTiles;
 var grid = new Array(xTiles);           // Relative grid coordinates game is played on.
@@ -51,6 +51,7 @@ function create() {
     actor.scale.x = 0.3;
     actor.scale.y = 0.3;
 
+    //Keyboard Events
     // Pausing game
     game.input.keyboard.addKey(Phaser.Keyboard.ESC).onDown.add(function() {
         if(!game.paused){
@@ -60,6 +61,32 @@ function create() {
             game.paused = false;
         }
     });
+
+    // Movement keys
+    game.input.keyboard.addKey(Phaser.Keyboard.UP).onDown.add(function() {
+        if(actor.angle != -180) {
+            inputDirection = 0;
+            whenStarted();
+        }
+    });
+    game.input.keyboard.addKey(Phaser.Keyboard.DOWN).onDown.add(function() {
+        if(actor.angle != 0) {
+            inputDirection = -180;
+            whenStarted();
+        }
+    });
+    game.input.keyboard.addKey(Phaser.Keyboard.LEFT).onDown.add(function() {
+        if(actor.angle != 90) {
+            inputDirection = -90;
+            whenStarted();
+        }
+    });
+    game.input.keyboard.addKey(Phaser.Keyboard.RIGHT).onDown.add(function() {
+        if(actor.angle != -90) {
+            inputDirection = 90;
+            whenStarted();
+        }
+    });
 }
 
 function update() {
@@ -67,7 +94,6 @@ function update() {
 	if (start) {
         var x = Math.floor(actor.x/tileSize);
         var y = Math.floor(actor.y/tileSize);
-        getInputDirection(function(){});
 		// Main game code
         if(actor.x % tileSize == 0 && actor.y % tileSize == 0) {
             if(grid[x][y]){
@@ -102,44 +128,24 @@ function update() {
                 //showGameOver();
             }
         }
-	} else {
-		getInputDirection(function() {
-            start = true;
-            trail.moveTo(actor.x, actor.y);
-        });
 	}
 }
-    function getInputDirection(callback) {
-        if (game.input.keyboard.isDown(Phaser.Keyboard.UP) && actor.angle != -180) {
-            // Start game if enter pressed.
-            callback();
-            inputDirection = 0;
-        }
-        else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) && actor.angle != 0) {
-            // Start game if enter pressed.
-            callback();
-            inputDirection = -180;
-        }
-        else if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) && actor.angle != 90) {
-            // Start game if enter pressed.
-            callback();
-            inputDirection = -90;
-        }
-        else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) && actor.angle != -90) {
-            // Start game if enter pressed.
-            callback();
-            inputDirection = 90;
-        }
-    }
 
-    function render() {
-        game.debug.spriteInfo(actor, 20, 400);
+function render() {
+    game.debug.spriteInfo(actor, 20, 400);
 
-    }
+}
 
-    function outOfBounds(actor) {
-    	return actor.x > 0 && actor.x < canvasWidth && actor.y > 0 && actor.y < canvasHeight;
+function outOfBounds(actor) {
+    return actor.x > 0 && actor.x < canvasWidth && actor.y > 0 && actor.y < canvasHeight;
+}
+
+function whenStarted() {
+    if(!start) {
+        start = true;
+        trail.moveTo(actor.x, actor.y);
     }
+}
 </script>
 </body>
 </html>
