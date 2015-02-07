@@ -51,6 +51,11 @@ function create() {
     actor.anchor.y = 0.5;
     actor.scale.x = 0.3;
     actor.scale.y = 0.3;
+
+    // Pausing game
+    game.input.keyboard.addKey(Phaser.Keyboard.ESC).onDown.add(function() {
+       game.paused = !game.paused;
+    });
 }
 function update() {
 	// Updated every frame
