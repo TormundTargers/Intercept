@@ -37,6 +37,7 @@ function create() {
     // Sets up the trail.
     trail = game.add.graphics(0,0);
     trail.lineStyle(3,0x3498DB,1);
+    trail.boundsPadding = 0;
     //  This creates a simple sprite that is using our loaded image and
     //  displays it on-screen
     actor = game.add.sprite(canvasWidth/2, canvasHeight/2, 'actor');
@@ -44,6 +45,9 @@ function create() {
     actor.anchor.y = 0.5;
     actor.scale.x = 0.3;
     actor.scale.y = 0.3;
+    // Sets up the sprite the trail writes to.
+    trailSprite = game.add.Sprite(0,0);
+    trailSprite.addChild(trail);
 }
 
 function update() {
