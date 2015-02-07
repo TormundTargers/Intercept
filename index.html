@@ -14,6 +14,14 @@ var start = false;                      // If the game has started or not
 var tileSize = 12;
 var canvasWidth = tileSize * 80;
 var canvasHeight = tileSize * 50;
+var trails = [];
+// Initialise trails array with false
+for(var i=0;i<canvasWidth;i++) {
+    trails[i] = [];
+    for(var j=0;j<canvasHeight;j++) {
+        trails[i][j] = false;
+    }
+}
 
 // Canvas size is a multiple of 32. 32x32 is the size of each grid.
 var game = new Phaser.Game(canvasWidth, canvasHeight, Phaser.CANVAS, 'intercept-canvas', { preload: preload, create: create,
@@ -59,23 +67,45 @@ function update() {
         }
 		switch (actor.angle) {
 			case 0:
-				actor.y -= speed;
+                    if(trails[actor.y - 1]) {
+                        start = false
+                    }
+                    else {
+                        actor.y -= speed;
+                    }
 				break;
 			case 90:
-				actor.x += speed;
+                    if(trails[actor.x + 1]) {
+                        start = false
+                    }
+                    else {
+                        actor.x += speed;
+                    }
 				break;
 			case -90:
-				actor.x -= speed;
+                    if(trails[actor.x - 1]) {
+                        start = false
+                    }
+                    else {
+                        actor.x -= speed;
+                    }
 				break;
 			case -180:
-				actor.y += speed;
+                    if(trails[actor.y + 1]) {
+                        start = false;
+                    }
+                    else {
+                        actor.y += speed;
+                    }
 				break;
 		}
         graphics.lineTo(actor.x,actor.y);
+        trails[actor.x][actor.y] = true;
 	} else {
 		getInputDirection(function() {
             start = true;
             graphics.moveTo(actor.x, actor.y);
+            trails[actor.x][actor.y] = true;
         });
 	}
 }
