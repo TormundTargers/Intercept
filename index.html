@@ -21,18 +21,16 @@ var game = new Phaser.Game(canvasWidth, canvasHeight, Phaser.CANVAS, 'intercept-
 var actor;
 
 function preload() {
-	// Assets that will be preloaded will go here
-
-    //  Here we are loading an image. The first parameter is the unique
-    //  string by which we'll identify the image later in our code.
-
-    //  The second parameter is the URL of the image (relative)
+	// Assets that will be preloaded will go here.
     game.load.image('actor', 'assets/img/blueBike1.png');
+    game.load.image('background', 'assets/img/backgroundTile32.png');
 
 }
 
 function create() {
 
+    // This loads and tiles the background image
+    game.add.tileSprite(0,0,canvasWidth,canvasHeight,'background');
     //  This creates a simple sprite that is using our loaded image and
     //  displays it on-screen
     actor = game.add.sprite(canvasWidth/2, canvasHeight/2, 'actor');
