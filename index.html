@@ -11,9 +11,13 @@
 var inputDirection = null;              // Stores the direction the actor is to move next
 var speed = 2;                          // This is the number of pixels the actor will move each frame
 var start = false;                      // If the game has started or not
+var tileSize = 32;
+var canvasWidth = tileSize * 30;
+var canvasHeight = tileSize * 18;
 
 // Canvas size is a multiple of 32. 32x32 is the size of each grid.
-var game = new Phaser.Game(960, 576, Phaser.CANVAS, 'intercept-canvas', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(canvasWidth, canvasHeight, Phaser.CANVAS, 'intercept-canvas', { preload: preload, create: create,
+    update: update, render: render });
 var actor;
 
 function preload() {
@@ -31,7 +35,7 @@ function create() {
 
     //  This creates a simple sprite that is using our loaded image and
     //  displays it on-screen
-    actor = game.add.sprite(480, 288, 'actor');
+    actor = game.add.sprite(canvasWidth/2, canvasHeight/2, 'actor');
     actor.anchor.x = 0.5;
     actor.anchor.y = 0.5;
     actor.scale.x = 0.3;
@@ -44,10 +48,12 @@ function update() {
 	if (start) {
         getInputDirection(function(){});
 		// Main game code
-		if (inputDirection != null) {
-			actor.angle = inputDirection;
-			inputDirection = null;
-		}
+        if(actor.x % tileSize == 0 && actor.y % tileSize == 0) {
+            if (inputDirection != null) {
+                actor.angle = inputDirection;
+                inputDirection = null;
+            }
+        }
 		switch (actor.angle) {
 			case 0:
 				actor.y -= speed;
@@ -89,6 +95,10 @@ function update() {
             callback();
             inputDirection = 90;
         }
+    }
+
+    function render() {
+        game.debug.spriteInfo(actor, 20, 32);
     }
 
 </script>
