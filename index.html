@@ -20,8 +20,9 @@
     for(var i=0;i<xTiles;i++){
         grid[i] = new Array(yTiles);
     }
+    var gameEnded = false;                  // Is the Game over?
     var pauseLabel;
-    var quitButton;
+    var resetButton;
 
     //Game Variables
     var game = new Phaser.Game(canvasWidth, canvasHeight, Phaser.CANVAS, 'intercept-canvas', {
@@ -55,21 +56,19 @@
 
         //Keyboard Events
         // Pausing game
-        game.input.keyboard.addKey(Phaser.Keyboard.ESC).onDown.add(function() {
-            if(!game.paused){
-                game.paused = true;
-                pauseLabel = game.add.text(canvasWidth/2, (canvasHeight/2)-30, 'Game Paused (Press Esc to Unpause)',{
-                    align:'center', font:'36px Arial', fill:'#FFFFFF'});
-                pauseLabel.anchor.setTo(0.5,0.5);
-                quitButton = game.add.sprite(canvasWidth/2, (canvasHeight/2)+30, 'resetButton');
-                quitButton.anchor.setTo(0.5, 0.5);
-            }
-            else{
-                game.paused = false;
-                pauseLabel.destroy();
-                quitButton.destroy();
+        game.input.keyboard.addKey(Phaser.Keyboard.ESC).onDown.add(function () {
+            if(!gameEnded) {
+                if (!game.paused) {
+                    game.paused = true;
+                    showMenu("pause");
+                }
+                else {
+                    game.paused = false;
+                    showMenu("clear");
+                }
             }
         });
+
 
         // Movement keys
         game.input.keyboard.addKey(Phaser.Keyboard.UP).onDown.add(function() {
@@ -105,7 +104,7 @@
             // Main game code
             if(actor.x % tileSize == 0 && actor.y % tileSize == 0) {
                 if(grid[x][y]){
-                    start = false;
+                    gameOver();
                 }
                 else{
                     grid[x][y] = true;
@@ -132,8 +131,7 @@
                 }
                 trail.lineTo(actor.x, actor.y);
                 if (!outOfBounds(actor)) {
-                    start = false;
-                    //showGameOver();
+                    gameOver();
                 }
             }
         }
@@ -141,9 +139,35 @@
 
     function render() {
         //game.debug.spriteInfo(actor, 20, 400);
-
     }
 
+    function gameOver(){
+        gameEnded = true;
+        showMenu("quit");
+        start = false;
+    }
+
+    function showMenu(string){
+        if(string == "quit"){
+            pauseLabel = game.add.text(canvasWidth/2, (canvasHeight/2)-30, 'Game Over!',{
+                align:'center', font:'36px Arial', fill:'#FFFFFF'});
+            pauseLabel.anchor.setTo(0.5,0.5);
+            resetButton = game.add.sprite(canvasWidth/2, (canvasHeight/2)+30, 'resetButton');
+            resetButton.anchor.setTo(0.5, 0.5);
+        }
+        else if(string == "pause"){
+            pauseLabel = game.add.text(canvasWidth/2, (canvasHeight/2)-30, 'Game Paused (Press Esc to Unpause)',{
+                align:'center', font:'36px Arial', fill:'#FFFFFF'});
+            pauseLabel.anchor.setTo(0.5,0.5);
+            resetButton = game.add.sprite(canvasWidth/2, (canvasHeight/2)+30, 'resetButton');
+            resetButton.anchor.setTo(0.5, 0.5);
+        }
+        else if(string == "clear"){
+            pauseLabel.destroy();
+            resetButton.destroy();
+        }
+    }
+    
     function outOfBounds(actor) {
         return actor.x > 0 && actor.x < canvasWidth && actor.y > 0 && actor.y < canvasHeight;
     }
