@@ -8,8 +8,9 @@
 <body>
 <script>
     // Global variables
-    var inputDirection = null;              // Stores the direction the actor is to move next
-    var speed = 3;                          // This is the number of pixels the actor will move each frame
+    var inputDirection1 = null;             // Stores the direction players are to move next
+    var inputDirection2 = null;
+    var speed = 4;                          // This is the number of pixels the player1 will move each frame
     var start = false;                      // If the game has started or not
     var tileSize = 12;                      // Size of game tiles/grid spacing
     var xTiles = 80;                        // Number of Tiles horizontally
@@ -29,12 +30,15 @@
         preload: preload, create: create, update: update, render: render});
 
     // Player
-    var actor;
-    var trail;      // The trail left behind actor
+    var player1;
+    var trail1;      // The trail left behind player1
+    var player2;
+    var trail2;
 
     function preload() {
         // Assets that will be preloaded will go here.
-        game.load.image('actor', 'assets/img/blueBike1.png');
+        game.load.image('player1', 'assets/img/blueBike1.png');
+        game.load.image('player2', 'assets/img/redBike1.png');
         game.load.image('background', 'assets/img/backgroundTile12.png');
         game.load.image('resetButton', 'assets/img/resetButton.png');
     }
@@ -42,17 +46,22 @@
     function create() {
         // This loads and tiles the background image
         game.add.tileSprite(0,0,canvasWidth,canvasHeight,'background');
-        // Sets up the trail.
-        trail = game.add.graphics(0,0);
-        trail.lineStyle(3,0x3498DB,1);
-        trail.boundsPadding = 0;
-        //  This creates a simple sprite that is using our loaded image and
-        //  displays it on-screen
-        actor = game.add.sprite(canvasWidth/2, canvasHeight/2, 'actor');
-        actor.anchor.x = 0.5;
-        actor.anchor.y = 0.5;
-        actor.scale.x = 0.3;
-        actor.scale.y = 0.3;
+        // Sets up the trails.
+        trail1 = game.add.graphics(0,0);
+        trail1.lineStyle(3,0x3498DB,1);
+        trail1.boundsPadding = 0;
+        trail2 = game.add.graphics(0,0);
+        trail2.lineStyle(3,0xCF000F,1);
+        trail2.boundsPadding = 0;
+        // Display Players
+        player1 = game.add.sprite(canvasWidth/4, canvasHeight/2, 'player1');
+        player1.anchor.setTo(0.5,0.5);
+        player1.scale.x = 0.3;
+        player1.scale.y = 0.3;
+        player2 = game.add.sprite(3*(canvasWidth/4), canvasHeight/2, 'player2');
+        player2.anchor.setTo(0.5,0.5);
+        player2.scale.x = 0.3;
+        player2.scale.y = 0.3;
 
         //Keyboard Events
         // Pausing game
@@ -72,26 +81,50 @@
 
         // Movement keys
         game.input.keyboard.addKey(Phaser.Keyboard.UP).onDown.add(function() {
-            if(actor.angle != -180) {
-                inputDirection = 0;
+            if(player1.angle != -180) {
+                inputDirection1 = 0;
                 whenStarted();
             }
         });
         game.input.keyboard.addKey(Phaser.Keyboard.DOWN).onDown.add(function() {
-            if(actor.angle != 0) {
-                inputDirection = -180;
+            if(player1.angle != 0) {
+                inputDirection1 = -180;
                 whenStarted();
             }
         });
         game.input.keyboard.addKey(Phaser.Keyboard.LEFT).onDown.add(function() {
-            if(actor.angle != 90) {
-                inputDirection = -90;
+            if(player1.angle != 90) {
+                inputDirection1 = -90;
                 whenStarted();
             }
         });
         game.input.keyboard.addKey(Phaser.Keyboard.RIGHT).onDown.add(function() {
-            if(actor.angle != -90) {
-                inputDirection = 90;
+            if(player1.angle != -90) {
+                inputDirection1 = 90;
+                whenStarted();
+            }
+        });
+        game.input.keyboard.addKey(Phaser.Keyboard.W).onDown.add(function() {
+            if(player2.angle != -180) {
+                inputDirection2 = 0;
+                whenStarted();
+            }
+        });
+        game.input.keyboard.addKey(Phaser.Keyboard.S).onDown.add(function() {
+            if(player2.angle != 0) {
+                inputDirection2 = -180;
+                whenStarted();
+            }
+        });
+        game.input.keyboard.addKey(Phaser.Keyboard.A).onDown.add(function() {
+            if(player2.angle != 90) {
+                inputDirection2 = -90;
+                whenStarted();
+            }
+        });
+        game.input.keyboard.addKey(Phaser.Keyboard.D).onDown.add(function() {
+            if(player2.angle != -90) {
+                inputDirection2 = 90;
                 whenStarted();
             }
         });
@@ -99,38 +132,73 @@
     function update() {
         // Updated every frame
         if (start) {
-            var x = Math.floor(actor.x/tileSize);
-            var y = Math.floor(actor.y/tileSize);
+            var x1 = Math.floor(player1.x/tileSize);
+            var y1 = Math.floor(player1.y/tileSize);
+            var x2 = Math.floor(player2.x/tileSize);
+            var y2 = Math.floor(player2.y/tileSize);
             // Main game code
-            if(actor.x % tileSize == 0 && actor.y % tileSize == 0) {
-                if(grid[x][y]){
+            if(player1.x % tileSize == 0 && player1.y % tileSize == 0) {
+                if(grid[x1][y1]){
                     gameOver();
                 }
                 else{
-                    grid[x][y] = true;
-                    if (inputDirection != null) {
-                        actor.angle = inputDirection;
-                        inputDirection = null;
+                    grid[x1][y1] = true;
+                    if (inputDirection1 != null) {
+                        player1.angle = inputDirection1;
+                        inputDirection1 = null;
+                    }
+                }
+            }
+            if(player2.x % tileSize == 0 && player2.y % tileSize == 0) {
+                if(grid[x2][y2]){
+                    gameOver();
+                }
+                else{
+                    grid[x2][y2] = true;
+                    if (inputDirection2 != null) {
+                        player2.angle = inputDirection2;
+                        inputDirection2 = null;
                     }
                 }
             }
             if(start) {
-                switch (actor.angle) {
+                switch (player1.angle) {
                     case 0:
-                        actor.y -= speed;
+                        player1.y -= speed;
                         break;
                     case 90:
-                        actor.x += speed;
+                        player1.x += speed;
                         break;
                     case -90:
-                        actor.x -= speed;
+                        player1.x -= speed;
                         break;
                     case -180:
-                        actor.y += speed;
+                        player1.y += speed;
                         break;
                 }
-                trail.lineTo(actor.x, actor.y);
-                if (!outOfBounds(actor)) {
+
+                trail1.lineTo(player1.x, player1.y);
+                if (!outOfBounds(player1)) {
+                    gameOver();
+                }
+            }
+            if(start) {
+                switch (player2.angle) {
+                    case 0:
+                        player2.y -= speed;
+                        break;
+                    case 90:
+                        player2.x += speed;
+                        break;
+                    case -90:
+                        player2.x -= speed;
+                        break;
+                    case -180:
+                        player2.y += speed;
+                        break;
+                }
+                trail2.lineTo(player2.x, player2.y);
+                if (!outOfBounds(player2)) {
                     gameOver();
                 }
             }
@@ -138,7 +206,7 @@
     }
 
     function render() {
-        //game.debug.spriteInfo(actor, 20, 400);
+        //game.debug.spriteInfo(player1, 20, 400);
     }
 
     function gameOver(){
@@ -175,7 +243,8 @@
     function whenStarted() {
         if(!start) {
             start = true;
-            trail.moveTo(actor.x, actor.y);
+            trail1.moveTo(player1.x, player1.y);
+            trail2.moveTo(player2.x, player2.y);
         }
     }
 </script>
