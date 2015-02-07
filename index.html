@@ -18,7 +18,10 @@ var canvasHeight = tileSize * 18;
 // Canvas size is a multiple of 32. 32x32 is the size of each grid.
 var game = new Phaser.Game(canvasWidth, canvasHeight, Phaser.CANVAS, 'intercept-canvas', { preload: preload, create: create,
     update: update, render: render });
+// Player
 var actor;
+// Graphics Module
+var graphics;
 
 function preload() {
 	// Assets that will be preloaded will go here.
@@ -38,7 +41,9 @@ function create() {
     actor.anchor.y = 0.5;
     actor.scale.x = 0.3;
     actor.scale.y = 0.3;
-
+    // Sets up the trail.
+    graphics = game.add.graphics(0,0);
+    graphics.lineStyle(1,0xFFFFFF,1);
 }
 
 function update() {
@@ -66,9 +71,11 @@ function update() {
 				actor.y += speed;
 				break;
 		}
+        graphics.lineTo(actor.x,actor.y);
 	} else {
 		getInputDirection(function() {
             start = true;
+            graphics.moveTo(actor.x, actor.y);
         });
 	}
 }
