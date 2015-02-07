@@ -49,12 +49,17 @@ function create() {
     actor.anchor.y = 0.5;
     actor.scale.x = 0.3;
     actor.scale.y = 0.3;
+
+    // Pausing game
+    game.input.keyboard.addKey(Phaser.Keyboard.ESC).onDown.add(function() {
+       game.paused = !game.paused;
+    });
 }
 function update() {
 	// Updated every frame
-    var x = Math.floor(actor.x/tileSize);
-    var y = Math.floor(actor.y/tileSize);
 	if (start) {
+        var x = Math.floor(actor.x/tileSize);
+        var y = Math.floor(actor.y/tileSize);
         getInputDirection(function(){});
 		// Main game code
         if(actor.x % tileSize == 0 && actor.y % tileSize == 0) {
@@ -63,7 +68,6 @@ function update() {
             }
             else{
                 grid[x][y] = true;
-                console.log("actorX:"+ actor.x + " actorY:" + actor.y + " x:" + x + " y:" + y + " set" + " " + grid[x][y]);
                 if (inputDirection != null) {
                     actor.angle = inputDirection;
                     inputDirection = null;
@@ -86,12 +90,10 @@ function update() {
                     break;
             }
             trail.lineTo(actor.x, actor.y);
-            if (!checkBounds(actor)) {
+            if (!outOfBounds(actor)) {
                 start = false;
                 //showGameOver();
             }
-        }
-        if(actor.x % tileSize == 0 && actor.y % tileSize == 0){
         }
 	} else {
 		getInputDirection(function() {
@@ -128,7 +130,7 @@ function update() {
 
     }
 
-    function checkBounds(actor) {
+    function outOfBounds(actor) {
     	return actor.x > 0 && actor.x < canvasWidth && actor.y > 0 && actor.y < canvasHeight;
     }
 </script>
