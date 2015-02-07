@@ -23,7 +23,8 @@
     }
     var gameEnded = false;                  // Is the Game over?
     var pauseLabel;
-    var resetButton;
+    //Reset Button Currently Unused.
+    //var resetButton;
 
     //Game Variables
     var game = new Phaser.Game(canvasWidth, canvasHeight, Phaser.CANVAS, 'intercept-canvas', {
@@ -40,7 +41,8 @@
         game.load.image('player1', 'assets/img/blueBike1.png');
         game.load.image('player2', 'assets/img/redBike1.png');
         game.load.image('background', 'assets/img/backgroundTile12.png');
-        game.load.image('resetButton', 'assets/img/resetButton.png');
+        //Reset Button Currently Unused.
+        //game.load.image('resetButton', 'assets/img/resetButton.png');
     }
 
     function create() {
@@ -220,19 +222,22 @@
             pauseLabel = game.add.text(canvasWidth/2, (canvasHeight/2)-30, 'Game Over!',{
                 align:'center', font:'36px Arial', fill:'#FFFFFF'});
             pauseLabel.anchor.setTo(0.5,0.5);
-            resetButton = game.add.sprite(canvasWidth/2, (canvasHeight/2)+30, 'resetButton');
-            resetButton.anchor.setTo(0.5, 0.5);
+            //Reset Button Currently Unused.
+            //resetButton = game.add.sprite(canvasWidth/2, (canvasHeight/2)+30, 'resetButton');
+            //resetButton.anchor.setTo(0.5, 0.5);
         }
         else if(string == "pause"){
             pauseLabel = game.add.text(canvasWidth/2, (canvasHeight/2)-30, 'Game Paused (Press Esc to Unpause)',{
                 align:'center', font:'36px Arial', fill:'#FFFFFF'});
             pauseLabel.anchor.setTo(0.5,0.5);
-            resetButton = game.add.sprite(canvasWidth/2, (canvasHeight/2)+30, 'resetButton');
-            resetButton.anchor.setTo(0.5, 0.5);
+            //Reset Button Currently Unused.
+            //resetButton = game.add.sprite(canvasWidth/2, (canvasHeight/2)+30, 'resetButton');
+            //resetButton.anchor.setTo(0.5, 0.5);
         }
         else if(string == "clear"){
             pauseLabel.destroy();
-            resetButton.destroy();
+            //Reset Button Currently Unused.
+            //resetButton.destroy();
         }
     }
     
