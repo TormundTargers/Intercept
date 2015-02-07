@@ -20,8 +20,8 @@ var game = new Phaser.Game(canvasWidth, canvasHeight, Phaser.CANVAS, 'intercept-
     update: update, render: render });
 // Player
 var actor;
-// Graphics Module
-var graphics;
+// The trail left behind actor
+var trail;
 
 function preload() {
 	// Assets that will be preloaded will go here.
@@ -35,8 +35,8 @@ function create() {
     // This loads and tiles the background image
     game.add.tileSprite(0,0,canvasWidth,canvasHeight,'background');
     // Sets up the trail.
-    graphics = game.add.graphics(0,0);
-    graphics.lineStyle(3,0x3498DB,1);
+    trail = game.add.graphics(0,0);
+    trail.lineStyle(3,0x3498DB,1);
     //  This creates a simple sprite that is using our loaded image and
     //  displays it on-screen
     actor = game.add.sprite(canvasWidth/2, canvasHeight/2, 'actor');
@@ -71,11 +71,11 @@ function update() {
                     actor.y += speed;
 				break;
 		}
-        graphics.lineTo(actor.x,actor.y);
+        trail.lineTo(actor.x,actor.y);
 	} else {
 		getInputDirection(function() {
             start = true;
-            graphics.moveTo(actor.x, actor.y);
+            trail.moveTo(actor.x, actor.y);
         });
 	}
 }
