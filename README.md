@@ -1,5 +1,5 @@
 # Intercept
-Tron-like 2d HTML5 game made for KentHack #3
+Tron-like 2d HTML5 game made for KentHack #3 using [Phaser](https://github.com/photonstorm/phaser). Check out the v0.2 [here](http://jamieredding.com/Intercept/)!
 
 ## Controls
 - Player 1 (Blue) <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> (Up, Left, Down, Right)
