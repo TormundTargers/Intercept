@@ -42,6 +42,9 @@ function create() {
 
     // This loads and tiles the background image
     game.add.tileSprite(0,0,canvasWidth,canvasHeight,'background');
+    // Sets up the trail.
+    graphics = game.add.graphics(0,0);
+    graphics.lineStyle(3,0x3498DB,1);
     //  This creates a simple sprite that is using our loaded image and
     //  displays it on-screen
     actor = game.add.sprite(canvasWidth/2, canvasHeight/2, 'actor');
@@ -49,9 +52,6 @@ function create() {
     actor.anchor.y = 0.5;
     actor.scale.x = 0.3;
     actor.scale.y = 0.3;
-    // Sets up the trail.
-    graphics = game.add.graphics(0,0);
-    graphics.lineStyle(1,0xFFFFFF,1);
 }
 
 function update() {
