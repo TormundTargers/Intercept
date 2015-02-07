@@ -20,6 +20,8 @@
     for(var i=0;i<xTiles;i++){
         grid[i] = new Array(yTiles);
     }
+    var pauseLabel;
+    var quitButton;
 
     //Game Variables
     var game = new Phaser.Game(canvasWidth, canvasHeight, Phaser.CANVAS, 'intercept-canvas', {
@@ -33,6 +35,7 @@
         // Assets that will be preloaded will go here.
         game.load.image('actor', 'assets/img/blueBike1.png');
         game.load.image('background', 'assets/img/backgroundTile12.png');
+        game.load.image('resetButton', 'assets/img/resetButton.png');
     }
 
     function create() {
@@ -53,7 +56,19 @@
         //Keyboard Events
         // Pausing game
         game.input.keyboard.addKey(Phaser.Keyboard.ESC).onDown.add(function() {
-            game.paused = !game.paused;
+            if(!game.paused){
+                game.paused = true;
+                pauseLabel = game.add.text(canvasWidth/2, (canvasHeight/2)-30, 'Game Paused (Press Esc to Unpause)',{
+                    align:'center', font:'36px Arial', fill:'#FFFFFF'});
+                pauseLabel.anchor.setTo(0.5,0.5);
+                quitButton = game.add.sprite(canvasWidth/2, (canvasHeight/2)+30, 'resetButton');
+                quitButton.anchor.setTo(0.5, 0.5);
+            }
+            else{
+                game.paused = false;
+                pauseLabel.destroy();
+                quitButton.destroy();
+            }
         });
 
         // Movement keys
@@ -125,7 +140,7 @@
     }
 
     function render() {
-        game.debug.spriteInfo(actor, 20, 400);
+        //game.debug.spriteInfo(actor, 20, 400);
 
     }
 
