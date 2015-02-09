@@ -61,11 +61,11 @@
         trail2.lineStyle(3,0xF22613,1);
         trail2.boundsPadding = 0;
         // Display Players
-        player1 = game.add.sprite(canvasWidth/4, canvasHeight/2, 'player1');
+        player1 = game.add.sprite(canvasWidth/4, canvasHeight/4, 'player1');
         player1.anchor.setTo(0.5,0.5);
         player1.scale.x = 0.3;
         player1.scale.y = 0.3;
-        player2 = game.add.sprite(3*(canvasWidth/4), canvasHeight/2, 'player2');
+        player2 = game.add.sprite(3*(canvasWidth/4), 3*(canvasHeight/4), 'player2');
         player2.anchor.setTo(0.5,0.5);
         player2.scale.x = 0.3;
         player2.scale.y = 0.3;
@@ -94,7 +94,13 @@
             }
         });
         game.input.keyboard.addKey(Phaser.Keyboard.S).onDown.add(function() {
-            if(player1.angle != 0) {
+            if(start) {
+                if (player1.angle != 0) {
+                    inputDirection1 = -180;
+                    whenStarted();
+                }
+            }
+            else {
                 inputDirection1 = -180;
                 whenStarted();
             }
@@ -118,7 +124,13 @@
             }
         });
         game.input.keyboard.addKey(Phaser.Keyboard.DOWN).onDown.add(function() {
-            if(player2.angle != 0) {
+            if(start) {
+                if (player2.angle != 0) {
+                    inputDirection2 = -180;
+                    whenStarted();
+                }
+            }
+            else {
                 inputDirection2 = -180;
                 whenStarted();
             }
