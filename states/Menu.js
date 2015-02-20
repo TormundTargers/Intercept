@@ -1,0 +1,3 @@
+Intercept.Menu = function(game){
+
+};

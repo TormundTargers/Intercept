@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Intercept</title>
+    <script src="assets/phaser.min.js"></script>
+    <script src="states/Boot.js"></script>
+    <script src="states/PreLoader.js"></script>
+    <script src="states/Menu.js"></script>
+    <script src="states/Game.js"></script>
+    <style>
+        canvas {
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        window.onLoad = function(){
+            // Game window global variables
+            var tileSize = 12;                      // Size of game tiles/grid spacing
+            var xTiles = 100;                       // Number of Tiles horizontally
+            var yTiles = 60;                        // Number of Tiles vertically
+            var canvasWidth = tileSize * xTiles;
+            var canvasHeight = tileSize * yTiles;
+
+            // The game window
+            var game = new Phaser.Game(canvasWidth, canvasHeight, Phaser.CANVAS, 'intercept-canvas', {
+                preload: preload, create: create, update: update, render: render});
+
+            // Add the game states
+            game.state.add('Boot',Intercept.Boot);
+            game.state.add('PreLoader',Intercept.PreLoader);
+            game.state.add('Menu',Intercept.Menu)
+            game.state.add('Game',Intercept.Game);
+
+            // Select the initial state
+            game.state.start('Boot');
+        };
+    </script>
+</body>
+</html>

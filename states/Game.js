@@ -1,0 +1,3 @@
+Intercept.Game = function(game){
+
+};
